@@ -1,9 +1,9 @@
 const images = [
   {
     preview:
-      "https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg",
+      "https://cdn.pixabay.com/photo/2019/05/14/16/43/orchids-4202820__480.jpg",
     original:
-      "https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg",
+      "https://cdn.pixabay.com/photo/2019/05/14/16/43/orchids-4202820_1280.jpg",
     description: "Hokkaido Flower",
   },
   {
@@ -85,12 +85,6 @@ const galleryMarkup = images
 
 galleryElement.insertAdjacentHTML("beforeend", galleryMarkup);
 
-const modalInstance = window.basicLightbox
-  ? window.basicLightbox.create(
-      '<img class="modal-image" src="" alt="" width="1280" height="853" />',
-    )
-  : null;
-
 galleryElement.addEventListener("click", (event) => {
   const clickedImage = event.target.closest(".gallery-image");
 
@@ -103,13 +97,13 @@ galleryElement.addEventListener("click", (event) => {
   const largeImageURL = clickedImage.dataset.source;
   console.log(largeImageURL);
 
-  if (!modalInstance) {
+  if (!window.basicLightbox) {
     return;
   }
 
-  const modalImage = modalInstance.element().querySelector(".modal-image");
-  modalImage.src = largeImageURL;
-  modalImage.alt = clickedImage.alt;
+  const modalInstance = window.basicLightbox.create(
+    `<img class="modal-image" src="${largeImageURL}" alt="${clickedImage.alt}" />`,
+  );
 
   modalInstance.show();
 });
