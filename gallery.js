@@ -101,9 +101,12 @@ galleryElement.addEventListener("click", (event) => {
     return;
   }
 
-  const modalInstance = window.basicLightbox.create(
-    `<img class="modal-image" src="${largeImageURL}" alt="${clickedImage.alt}" />`,
-  );
+  const modalImage = document.createElement("img");
+  modalImage.className = "modal-image";
+  modalImage.src = largeImageURL;
+  modalImage.alt = clickedImage.alt;
+
+  const modalInstance = window.basicLightbox.create(modalImage);
 
   modalInstance.show();
 });
