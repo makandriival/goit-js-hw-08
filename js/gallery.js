@@ -86,27 +86,18 @@ const galleryMarkup = images
 galleryElement.insertAdjacentHTML("beforeend", galleryMarkup);
 
 galleryElement.addEventListener("click", (event) => {
-  const clickedImage = event.target.closest(".gallery-image");
-
-  if (!clickedImage) {
-    return;
-  }
-
   event.preventDefault();
 
-  const largeImageURL = clickedImage.dataset.source;
-  console.log(largeImageURL);
-
-  if (!window.basicLightbox) {
+  if (event.target.nodeName !== "IMG") {
     return;
   }
 
-  const modalImage = document.createElement("img");
-  modalImage.className = "modal-image";
-  modalImage.src = largeImageURL;
-  modalImage.alt = clickedImage.alt;
+  const largeImageURL = event.target.dataset.source;
+  console.log(largeImageURL);
 
-  const modalInstance = window.basicLightbox.create(modalImage);
+  const instance = basicLightbox.create(`
+    <img src="${largeImageURL}" alt="${event.target.alt}">
+  `);
 
-  modalInstance.show();
+  instance.show();
 });
